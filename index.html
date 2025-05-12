@@ -141,6 +141,69 @@
           grid-template-columns: 1fr;
         }
       }
+      .slides-container {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        scroll-snap-type: y mandatory;
+      }
+      
+      .slide {
+        height: 100vh;
+        scroll-snap-align: start;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        position: relative;
+      }
+      
+      .story-section {
+        background: var(--bg-color);
+        padding: 4rem 2rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        position: relative;
+      }
+      
+      .story-section::before {
+        content: '"';
+        font-size: 6rem;
+        position: absolute;
+        top: -1rem;
+        left: 1rem;
+        color: var(--primary-color);
+        opacity: 0.2;
+      }
+
+      .platform-support {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+
+      .platform-card {
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--primary-color);
+        text-align: center;
+      }
+
+      .feature-highlight {
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        margin: 0.5rem 0;
+      }
+
+      .code-snippet {
+        background: rgba(74, 144, 226, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        font-family: monospace;
+        margin: 1rem 0;
+      }
     </style>
   </head>
   <body data-theme="light">
@@ -156,6 +219,12 @@
     </div>
 
     <div class="container">
+      <section class="story-section">
+        <h2>The Story Behind CapsLockX</h2>
+        <p>Growing up using ThinkPad's TrackPoint (the red dot), I became addicted to its efficiency. When I switched to a Surface Book, I missed that precise control. This led me to develop CapsLockX - a tool that lets you control everything from your keyboard, with acceleration-enabled mouse simulation.</p>
+        <div class="feature-highlight">The Core Idea: Heavy coding without touching the mouse. Keep your hands on the keyboard at all times.</div>
+      </section>
+
       <div class="features">
         <div class="feature-card">
           <h3>⚡ Enhanced Productivity</h3>
@@ -174,6 +243,32 @@
           <p>Control mouse movement and window management with pixel-perfect precision</p>
         </div>
       </div>
+
+      <section>
+        <h2>Core Features</h2>
+        <div class="features">
+          <div class="feature-card">
+            <h3>🎯 No Conflicts</h3>
+            <p>CapsLock remains functional as original or as your preferred modifier key</p>
+          </div>
+          <div class="feature-card">
+            <h3>🖱️ Mouse Simulation</h3>
+            <p>WASDQERF keys for intuitive mouse control with acceleration</p>
+          </div>
+          <div class="feature-card">
+            <h3>⌨️ Global Vim-like Navigation</h3>
+            <p>HJKLYUIONPD keys for Vim-style movement anywhere</p>
+          </div>
+          <div class="feature-card">
+            <h3>🖥️ Virtual Desktop Control</h3>
+            <p>Quick desktop switching with numbers 1-0</p>
+          </div>
+          <div class="feature-card">
+            <h3>🤖 AI Integration</h3>
+            <p>Brainstorm AI feature with 'B' key</p>
+          </div>
+        </div>
+      </section>
 
       <section class="demo-section">
         <h2>See it in Action</h2>
@@ -220,6 +315,27 @@
           </div>
         </div>
       </section>
+
+      <section>
+        <h2>Development</h2>
+        <div class="code-snippet">
+          # Easy Plugin Development
+          # Just drop your *.ahk file into ./Module to enable it
+        </div>
+        
+        <div class="platform-support">
+          <div class="platform-card">
+            <h3>Windows</h3>
+            <p>Full Feature Support</p>
+            <p>Native AutoHotkey Implementation</p>
+          </div>
+          <div class="platform-card">
+            <h3>MacOS</h3>
+            <p>Coming Soon</p>
+            <p>Subset of features (Golang-based)</p>
+          </div>
+        </div>
+      </section>
     </div>
 
     <footer class="container">
@@ -236,6 +352,16 @@
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         body.setAttribute('data-theme', newTheme);
       }
+
+      // Add smooth scrolling for slide navigation
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
     </script>
   </body>
 </html>
