@@ -3,24 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CapsLockX - Keyboard Enhancement Tool</title>
+    <meta name="description" content="CapsLockX - Transform your keyboard into a powerful productivity tool. Window management, text editing, and mouse control shortcuts." />
+    <meta name="keywords" content="CapsLockX, keyboard shortcuts, productivity tool, AutoHotkey, Windows automation" />
+    <title>CapsLockX - Ultimate Keyboard Enhancement Tool</title>
     <style>
       :root {
         --primary-color: #4a90e2;
         --dark-color: #2c3e50;
+        --light-bg: #ffffff;
+        --dark-bg: #1a1a1a;
+        --light-text: #2c3e50;
+        --dark-text: #ffffff;
+      }
+      [data-theme="dark"] {
+        --primary-color: #64b5f6;
+        --bg-color: var(--dark-bg);
+        --text-color: var(--dark-text);
+      }
+      [data-theme="light"] {
+        --bg-color: var(--light-bg);
+        --text-color: var(--light-text);
       }
       body {
         font-family: "Segoe UI", system-ui, sans-serif;
         line-height: 1.6;
         margin: 0;
         padding: 0;
-        color: var(--dark-color);
+        color: var(--text-color);
+        background: var(--bg-color);
+        transition: background-color 0.3s, color 0.3s;
+      }
+      .theme-toggle {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        padding: 0.5rem;
+        border-radius: 50%;
+        background: var(--primary-color);
+        border: none;
+        cursor: pointer;
+        z-index: 100;
       }
       .hero {
         background: linear-gradient(135deg, var(--primary-color), #34495e);
         color: white;
-        padding: 4rem 2rem;
+        padding: 6rem 2rem;
         text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        bottom: -5rem;
+        left: 0;
+        width: 100%;
+        height: 6rem;
+        background: var(--bg-color);
+        transform: skewY(-3deg);
       }
       .container {
         max-width: 1200px;
@@ -29,18 +69,21 @@
       }
       .features {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 2rem;
         margin: 3rem 0;
       }
       .feature-card {
-        padding: 1.5rem;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: var(--bg-color);
+        border: 1px solid rgba(74, 144, 226, 0.2);
       }
       .feature-card:hover {
         transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
       }
       .cta-button {
         display: inline-block;
@@ -50,60 +93,132 @@
         text-decoration: none;
         border-radius: 5px;
         font-weight: bold;
-        transition: background 0.3s ease;
+        transition: all 0.3s ease;
+        margin: 0.5rem;
       }
       .cta-button:hover {
         background: #357abd;
+        transform: translateY(-2px);
+      }
+      .demo-section {
+        padding: 4rem 0;
+        background: rgba(74, 144, 226, 0.05);
+        border-radius: 12px;
+        margin: 2rem 0;
+      }
+      .demo-video {
+        max-width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+      .documentation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 2rem 0;
+      }
+      .doc-link {
+        padding: 1rem;
+        border-radius: 8px;
+        background: rgba(74, 144, 226, 0.1);
+        text-decoration: none;
+        color: var(--primary-color);
+        transition: background 0.3s ease;
+      }
+      .doc-link:hover {
+        background: rgba(74, 144, 226, 0.2);
+      }
+      footer {
+        margin-top: 4rem;
+        padding: 2rem 0;
+        border-top: 1px solid rgba(74, 144, 226, 0.2);
+      }
+      @media (max-width: 768px) {
+        .hero {
+          padding: 4rem 1rem;
+        }
+        .features {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
-  <body>
+  <body data-theme="light">
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    
     <div class="hero">
       <h1>CapsLockX</h1>
       <p>Transform your keyboard into a powerful productivity tool</p>
-      <a href="https://github.com/snomiao/CapsLockX" class="cta-button"
-        >Get Started</a
-      >
+      <div>
+        <a href="https://github.com/snomiao/CapsLockX/releases/latest" class="cta-button">Download</a>
+        <a href="https://github.com/snomiao/CapsLockX" class="cta-button">View on GitHub</a>
+      </div>
     </div>
 
     <div class="container">
       <div class="features">
         <div class="feature-card">
-          <h3>Enhanced Productivity</h3>
-          <p>
-            Use CapsLock as a modifier key to access powerful shortcuts and
-            functions
-          </p>
+          <h3>⚡ Enhanced Productivity</h3>
+          <p>Use CapsLock as a modifier key to access powerful shortcuts and functions</p>
         </div>
         <div class="feature-card">
-          <h3>Customizable</h3>
-          <p>Create your own keyboard shortcuts and customize existing ones</p>
+          <h3>⚙️ Customizable</h3>
+          <p>Create your own keyboard shortcuts and customize existing ones to match your workflow</p>
         </div>
         <div class="feature-card">
-          <h3>Windows Integration</h3>
-          <p>
-            Seamlessly integrates with Windows for better workflow management
-          </p>
+          <h3>🪟 Windows Integration</h3>
+          <p>Seamlessly integrates with Windows for better workflow management</p>
+        </div>
+        <div class="feature-card">
+          <h3>🎯 Precise Control</h3>
+          <p>Control mouse movement and window management with pixel-perfect precision</p>
         </div>
       </div>
 
+      <section class="demo-section">
+        <h2>See it in Action</h2>
+        <img src="Modules/02-插件-窗口增强_Alt+Tab+WASD管理窗口.gif" alt="CapsLockX Demo" class="demo-video">
+      </section>
+
       <section>
-        <h2>About CapsLockX</h2>
-        <p>
-          CapsLockX is an open-source keyboard enhancement tool that transforms
-          your CapsLock key into a powerful modifier, enabling efficient
-          navigation and control of your computer.
-        </p>
+        <h2>Documentation</h2>
+        <div class="documentation-grid">
+          <a href="docs/README.en.md" class="doc-link">English Guide</a>
+          <a href="docs/README.zh.md" class="doc-link">中文指南</a>
+          <a href="docs/README.es.md" class="doc-link">Guía en Español</a>
+          <a href="docs/README.fr.md" class="doc-link">Guide Français</a>
+          <a href="docs/README.ru.md" class="doc-link">Руководство</a>
+        </div>
       </section>
 
       <section>
         <h2>Key Features</h2>
-        <ul>
-          <li>Window management shortcuts</li>
-          <li>Text editing enhancements</li>
-          <li>Mouse control via keyboard</li>
-          <li>Application-specific shortcuts</li>
-        </ul>
+        <div class="features">
+          <div class="feature-card">
+            <h3>🪟 Window Management</h3>
+            <ul>
+              <li>Quick window switching</li>
+              <li>Window snapping and arrangement</li>
+              <li>Multi-monitor support</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>✍️ Text Editing</h3>
+            <ul>
+              <li>Enhanced cursor movement</li>
+              <li>Quick text selection</li>
+              <li>Smart clipboard operations</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>🖱️ Mouse Control</h3>
+            <ul>
+              <li>Keyboard-based mouse movement</li>
+              <li>Precise pixel control</li>
+              <li>Quick scrolling</li>
+            </ul>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -113,5 +228,14 @@
         <a href="https://github.com/snomiao/CapsLockX">GitHub Repository</a>
       </p>
     </footer>
+
+    <script>
+      function toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        body.setAttribute('data-theme', newTheme);
+      }
+    </script>
   </body>
 </html>
