@@ -1,0 +1,3 @@
+[submodule "CapsLockX"]
+	path = CapsLockX
+	url = git@github.com:snolab/CapsLockX
