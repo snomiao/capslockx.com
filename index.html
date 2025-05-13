@@ -117,10 +117,31 @@
         border-radius: 12px;
         margin: 2rem 0;
       }
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+      .demo-item {
+        background: var(--bg-color);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      .demo-item h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+      }
       .demo-video {
-        max-width: 100%;
+        width: 100%;
         border-radius: 8px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        margin: 1rem 0;
+      }
+      .demo-item p {
+        margin: 1rem 0 0;
+        font-size: 0.95rem;
       }
       .documentation-grid {
         display: grid;
@@ -284,7 +305,28 @@
 
       <section class="demo-section">
         <h2>See it in Action</h2>
-        <img src="Modules/02-插件-窗口增强_Alt+Tab+WASD管理窗口.gif" alt="CapsLockX Demo" class="demo-video">
+        <div class="demo-grid">
+          <div class="demo-item">
+            <h3>🖱️ Mouse Control</h3>
+            <img src="mouse-control.gif" alt="Mouse Control Demo" class="demo-video" loading="lazy">
+            <p>Control mouse cursor with WASDQERF keys, with acceleration</p>
+          </div>
+          <div class="demo-item">
+            <h3>🪟 Window Management</h3>
+            <img src="window-management.gif" alt="Window Management Demo" class="demo-video" loading="lazy">
+            <p>Quick window switching and management with Alt+Tab+WASD</p>
+          </div>
+          <div class="demo-item">
+            <h3>⌨️ Cursor Movement</h3>
+            <img src="cursor-movement.gif" alt="Cursor Movement Demo" class="demo-video" loading="lazy">
+            <p>Vim-style cursor movement anywhere with HJKLYUION</p>
+          </div>
+          <div class="demo-item">
+            <h3>📐 Window Arrangement</h3>
+            <img src="window-arrange.gif" alt="Window Arrangement Demo" class="demo-video" loading="lazy">
+            <p>One-click window arrangement and optimization</p>
+          </div>
+        </div>
       </section>
 
       <section>
