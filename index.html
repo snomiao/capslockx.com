@@ -52,6 +52,16 @@
         position: relative;
         overflow: hidden;
       }
+      .hero-logo {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1rem;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        transition: transform 0.3s ease;
+      }
+      .hero-logo:hover {
+        transform: scale(1.1);
+      }
       .hero::after {
         content: "";
         position: absolute;
@@ -210,6 +220,7 @@
     <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     
     <div class="hero">
+      <img src="CapsLockX/Data/XIconBlue.png" alt="CapsLockX Logo" class="hero-logo">
       <h1>CapsLockX</h1>
       <p>Transform your keyboard into a powerful productivity tool</p>
       <div>
