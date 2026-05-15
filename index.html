@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="CapsLockX - Transform your keyboard into a powerful productivity tool. Window management, text editing, and mouse control shortcuts."
+      content="CapsLockX 2.0 — a cross-platform keyboard productivity layer in Rust. Hold CapsLock or Space + a key for vim navigation, mouse simulation, window management, voice dictation, and an LLM agent that drives your computer. macOS, Linux, and Windows."
     />
     <meta
       name="keywords"
-      content="CapsLockX, keyboard shortcuts, productivity tool, AutoHotkey, Windows automation"
+      content="CapsLockX, keyboard shortcuts, productivity, Rust, voice dictation, LLM agent, vim navigation, window management, macOS, Linux, Windows"
     />
-    <title>CapsLockX - Ultimate Keyboard Enhancement Tool</title>
+    <title>CapsLockX 2.0 — Keyboard productivity + voice + LLM agent</title>
+    <meta property="og:title" content="CapsLockX 2.0 — Keyboard productivity + voice + LLM agent" />
+    <meta property="og:description" content="Hold CapsLock or Space + a key. Vim nav, mouse, windows, voice, AI agent. Rust. macOS / Linux / Windows." />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="global.css" />
   </head>
@@ -20,16 +23,19 @@
 
     <div class="hero">
       <img src="favicon.png" alt="CapsLockX Logo" class="hero-logo" />
-      <h1>CapsLockX</h1>
-      <p>Transform your keyboard into a powerful productivity tool</p>
+      <h1>CapsLockX 2.0</h1>
+      <p>Hold <code>CapsLock</code> or <code>Space</code> + a key. Navigate without leaving home row, dictate by voice, let an LLM drive your computer.</p>
       <div>
         <a
           href="https://github.com/snolab/CapsLockX/releases/latest"
           class="cta-button"
           >Download</a
         >
+        <a href="https://snolab.github.io/CapsLockX/" class="cta-button"
+          >Docs</a
+        >
         <a href="https://github.com/snolab/CapsLockX" class="cta-button"
-          >View on GitHub</a
+          >GitHub</a
         >
       </div>
     </div>
@@ -40,42 +46,53 @@
         <p>
           Growing up using ThinkPad's TrackPoint (the red dot), I became
           addicted to its efficiency. When I switched to a Surface Book, I
-          missed that precise control. This led me to develop CapsLockX - a tool
-          that lets you control everything from your keyboard, with
+          missed that precise control. CapsLockX was born from that itch — a
+          tool that lets you drive everything from the keyboard, with
           acceleration-enabled mouse simulation.
         </p>
+        <p>
+          Version 2.0 is a ground-up rewrite in Rust, with a platform-agnostic
+          core and per-OS adapters. The Rust core also unlocks features the
+          original AutoHotkey 1.x couldn't reach: local voice dictation, a
+          streaming LLM brainstorm panel, and an LLM agent that operates the
+          UI on your behalf.
+        </p>
         <div class="feature-highlight">
-          The Core Idea: Heavy coding without touching the mouse. Keep your
-          hands on the keyboard at all times.
+          The core idea: heavy coding without touching the mouse. Keep your
+          hands on the keyboard at all times — and when even that's too much,
+          talk to your computer.
         </div>
       </section>
 
       <div class="features">
         <div class="feature-card">
-          <h3>⚡ Enhanced Productivity</h3>
+          <h3>⚡ Productivity layer</h3>
           <p>
-            Use CapsLock as a modifier key to access powerful shortcuts and
-            functions
+            <code>CapsLock</code> and <code>Space</code> become chord triggers.
+            Hold either + a key for instant actions, with zero conflict with
+            normal typing.
           </p>
         </div>
         <div class="feature-card">
-          <h3>⚙️ Customizable</h3>
+          <h3>🎙️ Voice dictation</h3>
           <p>
-            Create your own keyboard shortcuts and customize existing ones to
-            match your workflow
+            <code>Space+V</code> — local SenseVoice / whisper.cpp STT with
+            optional LLM polish, translation presets, and TTS fallback chain.
           </p>
         </div>
         <div class="feature-card">
-          <h3>🪟 Windows Integration</h3>
+          <h3>🤖 LLM agent</h3>
           <p>
-            Seamlessly integrates with Windows for better workflow management
+            <code>Space+M</code> or <code>clx agent</code> — describe a task
+            and the agent drives the UI via the CLX command language
+            (keystrokes, mouse, AX-tree waits, 60 Hz pixel reflexes).
           </p>
         </div>
         <div class="feature-card">
-          <h3>🎯 Precise Control</h3>
+          <h3>🎯 Precise control</h3>
           <p>
-            Control mouse movement and window management with pixel-perfect
-            precision
+            Physics-based mouse acceleration, vim-style cursor motion, and
+            virtual-desktop / window-tiling commands tuned for daily use.
           </p>
         </div>
       </div>
@@ -84,27 +101,31 @@
         <h2>Core Features</h2>
         <div class="features">
           <div class="feature-card">
-            <h3>🎯 No Conflicts</h3>
+            <h3>🎯 No conflicts</h3>
             <p>
-              CapsLock remains functional as original or as your preferred
-              modifier key
+              CapsLock can stay as a normal CapsLock when tapped; only the
+              chord (<code>Space+CapsLock</code>) locks you into CLX mode.
             </p>
           </div>
           <div class="feature-card">
-            <h3>🖱️ Mouse Simulation</h3>
-            <p>WASDQERF keys for intuitive mouse control with acceleration</p>
+            <h3>🖱️ Mouse simulation</h3>
+            <p><code>WASD</code> move with acceleration, <code>QE</code> clicks, <code>RF</code> scroll.</p>
           </div>
           <div class="feature-card">
-            <h3>⌨️ Global Vim-like Navigation</h3>
-            <p>HJKLYUIONPD keys for Vim-style movement anywhere</p>
+            <h3>⌨️ Vim-like navigation</h3>
+            <p><code>HJKL</code> cursor, <code>YUIO</code> page, <code>G</code> Enter, <code>T</code> Delete, <code>N</code>/<code>P</code> Tab — anywhere.</p>
           </div>
           <div class="feature-card">
-            <h3>🖥️ Virtual Desktop Control</h3>
-            <p>Quick desktop switching with numbers 1-0</p>
+            <h3>🖥️ Virtual desktop control</h3>
+            <p>Switch desktops with <code>1</code>–<code>9</code>. Cycle / close / tile windows with <code>Z</code> / <code>X</code> / <code>C</code>.</p>
           </div>
           <div class="feature-card">
-            <h3>🤖 AI Integration</h3>
-            <p>Brainstorm AI feature with 'B' key</p>
+            <h3>💬 Brainstorm chat</h3>
+            <p><code>Space+B</code> opens a streaming overlay to Gemini / OpenAI / Anthropic / Ollama / MLX.</p>
+          </div>
+          <div class="feature-card">
+            <h3>🧠 Configurable polish chain</h3>
+            <p>Short voice commands return raw; long dictation flows through local MLX or LLM corrector for punctuation and cleanup.</p>
           </div>
         </div>
       </section>
@@ -120,8 +141,7 @@
               class="demo-video"
               loading="lazy"
             />
-            <p>Control mouse cursor with WASDQERF keys, with acceleration</p>
-            j
+            <p>Control the cursor with <code>WASD</code> + <code>QE</code>/<code>RF</code>, with acceleration.</p>
           </div>
           <div class="demo-item">
             <h3>🪟 Window Management</h3>
@@ -131,7 +151,7 @@
               class="demo-video"
               loading="lazy"
             />
-            <p>Quick window switching and management with Alt+Tab+WASD</p>
+            <p>Cycle, close, and tile windows with <code>Z</code>/<code>X</code>/<code>C</code>.</p>
           </div>
           <div class="demo-item">
             <h3>⌨️ Cursor Movement</h3>
@@ -141,7 +161,7 @@
               class="demo-video"
               loading="lazy"
             />
-            <p>Vim-style cursor movement anywhere with HJKLYUION</p>
+            <p>Vim-style cursor motion anywhere with <code>HJKL</code> + <code>YUIO</code>.</p>
           </div>
           <div class="demo-item">
             <h3>📐 Window Arrangement</h3>
@@ -151,7 +171,7 @@
               class="demo-video"
               loading="lazy"
             />
-            <p>One-click window arrangement and optimization</p>
+            <p>One-keystroke tiling and arrangement.</p>
           </div>
         </div>
       </section>
@@ -168,6 +188,11 @@
             href="https://snolab.github.io/CapsLockX/#/./README.zh"
             class="doc-link"
             >中文指南</a
+          >
+          <a
+            href="https://snolab.github.io/CapsLockX/#/./README.ja"
+            class="doc-link"
+            >日本語ガイド</a
           >
           <a
             href="https://snolab.github.io/CapsLockX/#/./README.es"
@@ -193,48 +218,77 @@
           <div class="feature-card">
             <h3>🪟 Window Management</h3>
             <ul>
-              <li>Quick window switching</li>
-              <li>Window snapping and arrangement</li>
-              <li>Multi-monitor support</li>
+              <li>Cycle and switch windows (<code>Z</code>)</li>
+              <li>Tile / arrange (<code>C</code>, with <code>Shift</code> for side-by-side)</li>
+              <li>Virtual desktops <code>1</code>–<code>9</code></li>
+              <li>Multi-monitor aware</li>
             </ul>
           </div>
           <div class="feature-card">
             <h3>✍️ Text Editing</h3>
             <ul>
-              <li>Enhanced cursor movement</li>
-              <li>Quick text selection</li>
-              <li>Smart clipboard operations</li>
+              <li>Vim cursor + page navigation</li>
+              <li>Modifier passthrough for selection / word jumps</li>
+              <li>Voice dictation directly into the focused field</li>
             </ul>
           </div>
           <div class="feature-card">
             <h3>🖱️ Mouse Control</h3>
             <ul>
-              <li>Keyboard-based mouse movement</li>
-              <li>Precise pixel control</li>
-              <li>Quick scrolling</li>
+              <li>Keyboard-based cursor movement with physics-based acceleration</li>
+              <li>Left / right click, vertical scroll</li>
+              <li>Per-axis speed configurable in preferences</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <h3>🤖 AI features</h3>
+            <ul>
+              <li>Voice dictation (local STT, optional LLM polish)</li>
+              <li>Brainstorm chat overlay</li>
+              <li>LLM agent that drives the UI via AX-tree + screenshots</li>
             </ul>
           </div>
         </div>
       </section>
 
       <section>
-        <h2>Development</h2>
-        <div class="code-snippet">
-          # Easy Plugin Development # Just drop your *.ahk file into ./Module to
-          enable it
-        </div>
-
+        <h2>Platforms</h2>
         <div class="platform-support">
           <div class="platform-card">
-            <h3>Windows</h3>
-            <p>Full Feature Support</p>
-            <p>Native AutoHotkey Implementation</p>
+            <h3>macOS</h3>
+            <p>✅ Available (Rust 2.0)</p>
+            <p>Apple Silicon &amp; Intel · CGEventTap + AppKit, code-signed binary.</p>
           </div>
           <div class="platform-card">
-            <h3>MacOS</h3>
-            <p>Coming Soon</p>
-            <p>Subset of features (Golang-based)</p>
+            <h3>Linux</h3>
+            <p>✅ Available (Rust 2.0)</p>
+            <p>Wayland &amp; X11 · evdev + uinput.</p>
           </div>
+          <div class="platform-card">
+            <h3>Windows</h3>
+            <p>✅ Available (1.x AutoHotkey)</p>
+            <p>The original 1.x build is stable. Rust 2.0 Windows adapter is in progress.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Development</h2>
+        <p>
+          CapsLockX 2.0 is open source under GPL-3.0. The Rust workspace lives
+          at
+          <a href="https://github.com/snolab/CapsLockX">snolab/CapsLockX</a>
+          with a platform-agnostic core
+          (<code>rs/core</code>) and per-OS adapters
+          (<code>rs/adapters/{macos, linux, windows, browser}</code>). The
+          LLM agent's system prompt is editable at
+          <code>skills/clx-agent/SKILL.md</code> — no rebuild needed.
+        </p>
+        <div class="code-snippet">
+          # Build &amp; run on macOS
+          ./build.sh && clx           # forks to background
+          clx -f                      # foreground
+          clx agent --prompt "open notes and write today's date"
         </div>
       </section>
     </div>
@@ -242,7 +296,8 @@
     <footer class="container">
       <p>
         Created by <a href="https://github.com/snomiao">snomiao</a> |
-        <a href="https://github.com/snolab/CapsLockX">GitHub Repository</a>
+        <a href="https://github.com/snolab/CapsLockX">GitHub Repository</a> |
+        <a href="https://snolab.github.io/CapsLockX/">Docs</a>
       </p>
     </footer>
 
