@@ -94,12 +94,20 @@ jobs:
             fi
           done
 
-          if git diff --quiet -- lab; then
+          # Staged first, and the change detected against the index rather than the
+          # work tree, because a new page is an *untracked* file and `git diff` does
+          # not see those at all. Checking the work tree would report "already up to
+          # date" for the commonest sync there is — one that adds a note and changes
+          # nothing else — and the run would end having published nothing. (It read
+          # as working here only because two existing pages happened to change in
+          # the same sync.)
+          git add -A lab
+          if git diff --cached --quiet -- lab; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "lab/ is already up to date"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            git -c color.ui=never diff --stat -- lab | tail -20
+            git -c color.ui=never diff --cached --stat -- lab | tail -25
           fi
 
       - name: Commit and push
@@ -108,7 +116,9 @@ jobs:
           set -euo pipefail
           git config user.name "capslockx-lab-sync"
           git config user.email "noreply@github.com"
-          git add lab
+          # Already staged by the copy step, which had to stage in order to see new
+          # files at all. Repeated for correctness if the two are ever reordered.
+          git add -A lab
           # The source commit is recorded so a published page can always be traced
           # back to the revision it came from.
           source_sha="$(git rev-parse HEAD)"

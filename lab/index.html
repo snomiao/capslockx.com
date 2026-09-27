@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CapsLockX Lab</title>
-<meta name="description" content="Working notes from CapsLockX design: edge-case audits, the gesture notation, and a live keystroke recognizer.">
+<meta name="description" content="Working notes from CapsLockX design: the binding language and plugin contract, edge-case audits, the gesture notation, and live keystroke tools.">
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/png" href="/favicon.png">
 <style>
@@ -50,6 +50,36 @@ code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;
 </header>
 
 <ul>
+  <li><a class="card" href="/lab/clx-lang/">
+    <div class="t">The <code>.clx</code> binding language <span style="font-weight:400;color:var(--muted)">&middot; interactive</span></div>
+    <div class="d">One line per binding: a gesture <em>pattern</em>, <code>=&gt;</code>, an <em>action</em>. Both halves already existed in the project &mdash; this draft format only puts them next to each other. With a playground.</div>
+  </a></li>
+
+  <li><a class="card" href="/lab/plugins/">
+    <div class="t">What a plugin actually is</div>
+    <div class="d">A plugin is something a binding can call. Argues for exposing <em>effects</em> rather than domains, so the core never has to know what a plugin is for &mdash; and notes that <code>otoji</code> has been one all along, informally.</div>
+  </a></li>
+
+  <li><a class="card" href="/lab/script-store/">
+    <div class="t">A script store, not another executable</div>
+    <div class="d">Why shipping each small feature as its own <code>.exe</code> stopped scaling, what the pieces already in the tree give for free, and the one thing genuinely missing.</div>
+  </a></li>
+
+  <li><a class="card" href="/lab/dpw-plugin/">
+    <div class="t">Porting <code>#DPW#</code></div>
+    <div class="d">AutoHotkey types a password when you type <code>#DPW#</code>. Porting it is two questions wearing one coat: generating a password is trivial and safe, retrieving a stored one is neither. This separates them and ships only the first.</div>
+  </a></li>
+
+  <li><a class="card" href="/lab/key-probe/">
+    <div class="t">Key probe <span style="font-weight:400;color:var(--muted)">&middot; interactive</span></div>
+    <div class="d">Records what the foreground application really receives, so it can be diffed against what the <code>WH_KEYBOARD_LL</code> hook logged for the same keystrokes. The gap between the two lists is exactly what CapsLockX suppressed or injected.</div>
+  </a></li>
+
+  <li><a class="card" href="/lab/quiet-window/">
+    <div class="t">The quiet window <span style="font-weight:400;color:var(--muted)">&middot; interactive</span></div>
+    <div class="d">Keyboard tests need the keyboard, and the author was using it. A hands-off protocol: the page opens, you press Run test and let go, and the test drives a machine nobody is typing on.</div>
+  </a></li>
+
   <li><a class="card" href="/lab/fn-row-rethink/">
     <div class="t">F1&ndash;F12, rethought in the notation</div>
     <div class="d">Five ways to put function keys on the number row, compared in the gesture language rather than in prose. Where the design landed, and what it cost.</div>
