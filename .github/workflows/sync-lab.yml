@@ -1,0 +1,120 @@
+# Publish the CapsLockX design notes at /lab, without anyone copying files.
+#
+# `lab/` here is a copy of `lab/` in snolab/CapsLockX, and it was made by hand
+# (commit 7cb0183). It went stale immediately: the live site serves four design
+# notes while the source repo has twelve. Anything that requires a human to
+# remember a copy step ends up out of date, so this does it.
+#
+# Deliberately not a Cloudflare deploy. Cloudflare Pages is already connected to
+# this repository and builds on push — the live site matches the last commit here,
+# which is how that was confirmed. A `wrangler pages deploy` step would publish the
+# same thing twice, and would need a CLOUDFLARE_API_TOKEN for no gain. Pushing is
+# the deploy; this workflow only has to push.
+#
+# That is also why the default GITHUB_TOKEN is enough. Its pushes famously do not
+# trigger *other workflows*, but Cloudflare watches the repository through its own
+# GitHub integration, which sees every push regardless of who made it. No secrets.
+
+name: sync-lab
+
+on:
+  schedule:
+    # 04:42 UTC daily, after the CapsLockX nightly beta has settled.
+    - cron: "42 4 * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Show what would change without committing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  # Two syncs racing would both try to push the same files.
+  group: sync-lab
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.repository == 'snomiao/capslockx.com'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only the lab directory, and only the tip: this is a copy of design notes,
+      # not a mirror of the project's history.
+      - name: Fetch lab/ from CapsLockX
+        uses: actions/checkout@v4
+        with:
+          repository: snolab/CapsLockX
+          ref: main
+          path: .source
+          sparse-checkout: lab
+          sparse-checkout-cone-mode: false
+          fetch-depth: 1
+
+      - name: Copy the design notes across
+        id: copy
+        run: |
+          set -euo pipefail
+          test -d .source/lab || { echo "no lab/ in the source repo" >&2; exit 1; }
+
+          # --delete so a note removed upstream stops being served, rather than
+          # lingering on the site for ever with no source to correct it.
+          #
+          # Excluded, with reasons:
+          #   serve.ts          the local dev server; means nothing on a static host
+          #   keyboard-handoff  a test harness that talks to that dev server's
+          #                     /api/handoff endpoints, so published it is a page
+          #                     whose buttons cannot work
+          #   /index.html       THIS SITE'S OWN lab index, and the leading slash
+          #                     matters: it anchors the exclusion to the top level
+          #                     so each page's own index.html still syncs. The
+          #                     source repo has no static lab index — lab/serve.ts
+          #                     generates one at runtime — so without this, --delete
+          #                     removes the hand-written index and /lab/ goes dark.
+          rsync -a --delete \
+            --exclude 'serve.ts' \
+            --exclude 'keyboard-handoff/' \
+            --exclude '/index.html' \
+            .source/lab/ lab/
+
+          rm -rf .source
+
+          # A synced page nobody links to is published and unreachable. The index
+          # is deliberately hand-written — each card has a title and a description
+          # that say what the note argues, which a directory name cannot — so this
+          # reports the gap rather than filling it with something worse.
+          for dir in lab/*/; do
+            name="$(basename "$dir")"
+            if ! grep -q "/lab/$name/" lab/index.html; then
+              echo "::warning::/lab/$name/ is published but not linked from lab/index.html — it needs a card"
+            fi
+          done
+
+          if git diff --quiet -- lab; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "lab/ is already up to date"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git -c color.ui=never diff --stat -- lab | tail -20
+          fi
+
+      - name: Commit and push
+        if: steps.copy.outputs.changed == 'true' && inputs.dry_run != true
+        run: |
+          set -euo pipefail
+          git config user.name "capslockx-lab-sync"
+          git config user.email "noreply@github.com"
+          git add lab
+          # The source commit is recorded so a published page can always be traced
+          # back to the revision it came from.
+          source_sha="$(git rev-parse HEAD)"
+          git commit -m "chore(lab): sync design notes from CapsLockX
+
+          Synced by .github/workflows/sync-lab.yml from snolab/CapsLockX@main."
+          git push
+          echo "pushed — Cloudflare Pages will build from this commit"
+          echo "site commit was $source_sha"
